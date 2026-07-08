@@ -1,0 +1,85 @@
+product_id: 3225
+name: EasyModelePdf
+slug: easymodelepdf
+module_dir: "."
+
+doli_min: V19
+doli_max: V23
+php_min: "7.4"
+
+price: "0"
+contact: nz@anatoleconseil.com
+categories: [modeles-documents, outils-systemes]
+keywords: "pdf, modele pdf, document model, custom pdf, drag and drop, template"
+validity_days: 730
+
+descriptions:
+  en:
+    short: "Install your custom PDF document models (pdf_*.modules.php) with a simple drag & drop — no carrier module to build."
+    long: |
+      <h2>EasyModelePdf — drop your custom PDF models, done</h2>
+      <p>You wrote a custom PDF document model (<code>pdf_mymodel.modules.php</code>) for a customer.
+      Dolibarr gives you no way to install it: you have to build a carrier module by hand for every
+      customer, declare <code>module_parts['models']</code>, copy the file into the right
+      <code>core/modules/&lt;object&gt;/doc/</code> directory... and remember that the class name must
+      match the file name, or the model silently never shows up.</p>
+      <p><b>EasyModelePdf replaces all of that with a drag &amp; drop.</b></p>
+      <h3>How it works</h3>
+      <ul>
+        <li><b>Drop</b> your <code>pdf_*.modules.php</code> files on the module setup page (several at once).</li>
+        <li><b>Auto-detection</b> of the target object from the <code>ModelePDF*</code> parent class:
+        customer orders, invoices, proposals, shipments, delivery receipts, supplier orders and invoices,
+        contracts, interventions, projects, tasks, stock, manufacturing orders, BOMs, tickets.</li>
+        <li><b>Validation</b> with clear error messages: file name pattern, PHP class present, and the
+        "class name = file name" Dolibarr rule enforced instead of failing silently.</li>
+        <li><b>Safe storage</b>: the file is kept in the Dolibarr documents directory (source of truth)
+        and deployed into the module tree. A module upgrade never loses your models — they are
+        redeployed automatically at activation.</li>
+        <li><b>Management</b> from the same page: enable/disable the model, set it as default for its
+        object type, download it back, delete it. Installed models also show up in the native document
+        model lists, like any core model.</li>
+      </ul>
+      <h3>Requirements</h3>
+      <ul>
+        <li>Dolibarr 19.0+, PHP 7.4+</li>
+        <li>The web server must be able to write inside the module directory to deploy models
+        (a clear warning is shown otherwise).</li>
+      </ul>
+      <p><i>Security note: uploading a PHP file is code deployment. Upload is restricted to Dolibarr
+      admin users, CSRF-protected, and the file is parsed to check it declares the expected model
+      class. Only deploy models you trust.</i></p>
+  fr:
+    short: "Installez vos modèles PDF personnalisés (pdf_*.modules.php) par simple glisser-déposer — sans module porteur à développer."
+    long: |
+      <h2>EasyModelePdf — déposez vos modèles PDF, c'est installé</h2>
+      <p>Vous avez développé un modèle PDF personnalisé (<code>pdf_monmodele.modules.php</code>) pour un
+      client. Dolibarr n'offre aucun moyen de l'installer : il faut fabriquer un module porteur à la main
+      pour chaque client, déclarer <code>module_parts['models']</code>, copier le fichier dans le bon
+      répertoire <code>core/modules/&lt;objet&gt;/doc/</code>... et ne pas oublier que le nom de la classe
+      doit être identique au nom du fichier, sinon le modèle n'apparaît jamais, sans aucune erreur.</p>
+      <p><b>EasyModelePdf remplace tout ça par un glisser-déposer.</b></p>
+      <h3>Fonctionnement</h3>
+      <ul>
+        <li><b>Déposez</b> vos fichiers <code>pdf_*.modules.php</code> sur la page de configuration du
+        module (plusieurs à la fois).</li>
+        <li><b>Détection automatique</b> de l'objet cible via la classe parente <code>ModelePDF*</code> :
+        commandes clients, factures, devis, expéditions, bons de livraison, commandes et factures
+        fournisseurs, contrats, interventions, projets, tâches, stock, ordres de fabrication, BOM, tickets.</li>
+        <li><b>Validation</b> avec messages d'erreur clairs : forme du nom de fichier, classe PHP présente,
+        et la règle Dolibarr « classe = nom de fichier » vérifiée au lieu d'échouer silencieusement.</li>
+        <li><b>Stockage pérenne</b> : le fichier est conservé dans le répertoire documents de Dolibarr
+        (source de vérité) et déployé dans l'arborescence du module. Une mise à jour du module ne perd
+        jamais vos modèles — ils sont redéployés automatiquement à l'activation.</li>
+        <li><b>Gestion</b> depuis la même page : activer/désactiver le modèle, le définir par défaut pour
+        son type d'objet, le retélécharger, le supprimer. Les modèles installés apparaissent aussi dans
+        les listes natives de modèles de documents, comme n'importe quel modèle du core.</li>
+      </ul>
+      <h3>Prérequis</h3>
+      <ul>
+        <li>Dolibarr 19.0+, PHP 7.4+</li>
+        <li>Le serveur web doit pouvoir écrire dans le répertoire du module pour déployer les modèles
+        (un avertissement clair s'affiche sinon).</li>
+      </ul>
+      <p><i>Note de sécurité : téléverser un fichier PHP revient à déployer du code. L'envoi est réservé
+      aux administrateurs Dolibarr, protégé CSRF, et le fichier est analysé pour vérifier qu'il déclare
+      bien la classe de modèle attendue. Ne déployez que des modèles de confiance.</i></p>

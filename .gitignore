@@ -1,2 +1,4 @@
 # Deployed model files (runtime artifacts, source of truth is DOL_DATA_ROOT)
 core/modules/*/
+# Packaged zips
+module_*.zip
