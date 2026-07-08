@@ -240,21 +240,22 @@ $models = emp_list_models($db, $conf);
 if (empty($models)) {
 	print '<br><span class="opacitymedium">'.$langs->trans("EmpNoModelYet").'</span>';
 } else {
+	print load_fiche_titre($langs->trans("EmpCarriedModels"), '', '');
+
+	print '<div class="div-table-responsive-no-min">';
+	print '<table class="noborder centpercent">';
+	print '<tr class="liste_titre">';
+	print '<td>'.$langs->trans("File").'</td>';
+	print '<td>'.$langs->trans("Name").'</td>';
+	print '<td>'.$langs->trans("Type").'</td>';
+	print '<td class="center" width="80">'.$langs->trans("EmpDeployed").'</td>';
+	print '<td class="center" width="80">'.$langs->trans("Status").'</td>';
+	print '<td class="center" width="80">'.$langs->trans("Default").'</td>';
+	print '<td class="center" width="100">'.$langs->trans("Action").'</td>';
+	print '</tr>';
+
 	foreach ($models as $parent => $list) {
 		$info = $map[$parent];
-
-		print load_fiche_titre($langs->trans($info['label']), '', '');
-
-		print '<div class="div-table-responsive-no-min">';
-		print '<table class="noborder centpercent">';
-		print '<tr class="liste_titre">';
-		print '<td>'.$langs->trans("File").'</td>';
-		print '<td>'.$langs->trans("Name").'</td>';
-		print '<td class="center" width="80">'.$langs->trans("EmpDeployed").'</td>';
-		print '<td class="center" width="80">'.$langs->trans("Status").'</td>';
-		print '<td class="center" width="80">'.$langs->trans("Default").'</td>';
-		print '<td class="center" width="100">'.$langs->trans("Action").'</td>';
-		print '</tr>';
 
 		foreach ($list as $m) {
 			$urlbase = $_SERVER["PHP_SELF"].'?token='.newToken().'&parentkey='.urlencode($parent).'&value='.urlencode($m['name']);
@@ -262,6 +263,7 @@ if (empty($models)) {
 			print '<tr class="oddeven">';
 			print '<td>'.dol_escape_htmltag($m['file']).'</td>';
 			print '<td>'.dol_escape_htmltag($m['name']).'</td>';
+			print '<td>'.$langs->trans($info['label']).'</td>';
 
 			// Deployed in module tree?
 			print '<td class="center">';
@@ -295,9 +297,9 @@ if (empty($models)) {
 
 			print '</tr>';
 		}
-		print '</table>';
-		print '</div><br>';
 	}
+	print '</table>';
+	print '</div><br>';
 
 	print '<div class="center">';
 	print '<a class="button reposition" href="'.$_SERVER["PHP_SELF"].'?action=redeploy&token='.newToken().'">'.$langs->trans("EmpRedeploy").'</a>';
