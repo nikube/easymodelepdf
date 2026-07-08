@@ -1,0 +1,28 @@
+# EasyModelePdf language file - en_US
+Module185165Name=EasyModelePdf
+Module185165Desc=Install your custom PDF document models (pdf_*.modules.php) with a simple drag & drop
+
+EmpSetup=EasyModelePdf setup
+EmpSetupIntro=Drop your custom PDF model files (pdf_xxx.modules.php). The module automatically detects the target object (order, invoice, proposal...), checks that the class name matches the file name, then installs the model. It then shows up in the native document model list of the related object.
+EmpDropZoneText=Drag & drop your pdf_xxx.modules.php files here, or click to browse
+EmpDropZoneHint=Multiple files accepted. An already installed file gets updated.
+EmpNoModelYet=No model installed yet. Drop a first file above.
+EmpDeployed=Deployed
+EmpRedeploy=Redeploy all models
+EmpRedeployed=%s model(s) redeployed into the module tree
+EmpFileInstalled=Model %s installed (object: %s)
+EmpFileUpdated=Model %s updated (object: %s)
+EmpFileDeleted=Model %s deleted
+EmpConfirmDelete=Permanently delete model %s (stored file + deployed file)?
+
+EmpErrBadFileName=%s: file name must look like pdf_name.modules.php
+EmpErrCannotRead=%s: unreadable file
+EmpErrNoClass=%s: no PHP class found in file
+EmpErrClassMismatch=%s: the class must be named "%s" (Dolibarr rule: class = file name). Found class(es): %s
+EmpErrUnsupportedParent=%s: unsupported parent class "%s". Supported parent classes: %s
+EmpErrUpload=%s: error while uploading file
+EmpErrTooBig=%s: file too big (max 4 MB)
+EmpErrMkdir=Cannot create directory %s
+EmpErrCopy=Cannot write file %s
+EmpErrDelete=Cannot delete %s
+EmpWarnNotWritable=The module directory (%s) is not writable by the web server: models cannot be deployed. Fix permissions.

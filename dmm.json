@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "module_id": "easymodelepdf",
+  "name": "EasyModelePdf",
+  "description": "Drag & drop installer for custom Dolibarr PDF document models (pdf_*.modules.php): auto-detects the target object, validates the class/file name rule, stores models safely and deploys them into the native document model lists.",
+  "author": "Anatole Conseil",
+  "url": "https://github.com/nikube/easymodelepdf",
+  "license": "GPL-3.0-or-later",
+  "dolibarr_module_id": 185165,
+  "branch": "master",
+  "compatibility": {
+    "0.x": {
+      "dolibarr_min": "19.0.0",
+      "dolibarr_max": "24.*",
+      "php_min": "7.4"
+    }
+  },
+  "dependencies": {
+    "modules": [],
+    "php_extensions": ["tokenizer"]
+  }
+}

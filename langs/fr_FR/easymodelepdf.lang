@@ -1,0 +1,28 @@
+# EasyModelePdf language file - fr_FR
+Module185165Name=EasyModelePdf
+Module185165Desc=Installez vos modèles PDF personnalisés (pdf_*.modules.php) par simple glisser-déposer
+
+EmpSetup=Configuration EasyModelePdf
+EmpSetupIntro=Déposez vos fichiers de modèle PDF personnalisés (pdf_xxx.modules.php). Le module détecte automatiquement l'objet cible (commande, facture, devis...), vérifie que le nom de la classe correspond au nom du fichier, puis installe le modèle. Il apparaît ensuite dans la liste native des modèles de documents de l'objet concerné.
+EmpDropZoneText=Glissez-déposez vos fichiers pdf_xxx.modules.php ici, ou cliquez pour parcourir
+EmpDropZoneHint=Plusieurs fichiers acceptés. Un fichier déjà installé est mis à jour.
+EmpNoModelYet=Aucun modèle installé pour le moment. Déposez un premier fichier ci-dessus.
+EmpDeployed=Déployé
+EmpRedeploy=Redéployer tous les modèles
+EmpRedeployed=%s modèle(s) redéployé(s) dans l'arborescence du module
+EmpFileInstalled=Modèle %s installé (objet : %s)
+EmpFileUpdated=Modèle %s mis à jour (objet : %s)
+EmpFileDeleted=Modèle %s supprimé
+EmpConfirmDelete=Supprimer définitivement le modèle %s (fichier stocké + fichier déployé) ?
+
+EmpErrBadFileName=%s : le nom de fichier doit être de la forme pdf_nom.modules.php
+EmpErrCannotRead=%s : fichier illisible
+EmpErrNoClass=%s : aucune classe PHP trouvée dans le fichier
+EmpErrClassMismatch=%s : la classe doit s'appeler "%s" (règle Dolibarr : classe = nom de fichier). Classe(s) trouvée(s) : %s
+EmpErrUnsupportedParent=%s : classe parente "%s" non gérée. Classes parentes supportées : %s
+EmpErrUpload=%s : erreur pendant l'envoi du fichier
+EmpErrTooBig=%s : fichier trop volumineux (max 4 Mo)
+EmpErrMkdir=Impossible de créer le répertoire %s
+EmpErrCopy=Impossible d'écrire le fichier %s
+EmpErrDelete=Impossible de supprimer %s
+EmpWarnNotWritable=Le répertoire du module (%s) n'est pas accessible en écriture par le serveur web : les modèles ne pourront pas être déployés. Ajustez les permissions.
