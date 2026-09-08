@@ -31,3 +31,5 @@ EmpCarriedModels=Modèles installés
 EmpAvailableModels=Modèles disponibles à télécharger (%s)
 EmpAvailableIntro=Modèles PDF fournis par Dolibarr et les autres modules actifs. Téléchargez-en un comme point de départ, renommez le fichier ET la classe (pdf_monmodele), adaptez-le, puis déposez-le ci-dessus.
 EmpOrigin=Origine
+EmpConfirmInUse=ATTENTION : %s objet(s) de type « %s » utilisent encore ce modèle. Leur PDF ne pourra plus être régénéré tant qu'un autre modèle ne leur est pas affecté.
+EmpConfirmIsDefault=ATTENTION : c'est le modèle par défaut pour « %s ». Après suppression, plus aucun modèle par défaut ne sera défini.

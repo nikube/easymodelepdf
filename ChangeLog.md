@@ -2,6 +2,8 @@
 
 ## 0.1.1
 
+- New: the delete confirmation warns when objects still use the model and when it is the
+  default model of its object type.
 - New: collapsible list of the PDF models available in Dolibarr core and other enabled
   modules, downloadable as starting points for a custom model.
 - Fix: shipment models were always rejected (core parent class is `ModelePdfExpedition`,

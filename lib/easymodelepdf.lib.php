@@ -43,31 +43,32 @@ function easymodelepdfAdminPrepareHead()
  * Key = abstract parent class in Dolibarr core (what the uploaded model must extend).
  * Values verified against Dolibarr v23 core:
  *  - dir:      subdir of core/modules/ where the model file must live (scanned with '' and '/doc' suffix)
+ *  - table:    llx_ table of the object (column model_pdf) used to count objects still using a model
  *  - type:     value of llx_document_model.type used by addDocumentModel()/delDocumentModel()
  *  - const:    constant holding the default model name for the object
  *  - langfile: lang file to load for the label
  *  - label:    translation key for the object type
  *
- * @return array<string,array{dir:string,type:string,const:string,langfile:string,label:string}>
+ * @return array<string,array{dir:string,table:string,type:string,const:string,langfile:string,label:string}>
  */
 function emp_supported_types()
 {
 	return array(
-		'ModelePDFCommandes' => array('dir' => 'commande', 'type' => 'order', 'const' => 'COMMANDE_ADDON_PDF', 'langfile' => 'orders', 'label' => 'CustomersOrders'),
-		'ModelePDFFactures' => array('dir' => 'facture', 'type' => 'invoice', 'const' => 'FACTURE_ADDON_PDF', 'langfile' => 'bills', 'label' => 'BillsCustomers'),
-		'ModelePDFPropales' => array('dir' => 'propale', 'type' => 'propal', 'const' => 'PROPALE_ADDON_PDF', 'langfile' => 'propal', 'label' => 'Proposals'),
-		'ModelePdfExpedition' => array('dir' => 'expedition', 'type' => 'shipping', 'const' => 'EXPEDITION_ADDON_PDF', 'langfile' => 'sendings', 'label' => 'Shipments'),
-		'ModelePDFDeliveryOrder' => array('dir' => 'delivery', 'type' => 'delivery', 'const' => 'DELIVERY_ADDON_PDF', 'langfile' => 'deliveries', 'label' => 'Deliveries'),
-		'ModelePDFSuppliersOrders' => array('dir' => 'supplier_order', 'type' => 'order_supplier', 'const' => 'COMMANDE_SUPPLIER_ADDON_PDF', 'langfile' => 'orders', 'label' => 'SuppliersOrders'),
-		'ModelePDFSuppliersInvoices' => array('dir' => 'supplier_invoice', 'type' => 'invoice_supplier', 'const' => 'INVOICE_SUPPLIER_ADDON_PDF', 'langfile' => 'bills', 'label' => 'BillsSuppliers'),
-		'ModelePDFContract' => array('dir' => 'contract', 'type' => 'contract', 'const' => 'CONTRACT_ADDON_PDF', 'langfile' => 'contracts', 'label' => 'Contracts'),
-		'ModelePDFFicheinter' => array('dir' => 'fichinter', 'type' => 'ficheinter', 'const' => 'FICHEINTER_ADDON_PDF', 'langfile' => 'interventions', 'label' => 'Interventions'),
-		'ModelePDFProjects' => array('dir' => 'project', 'type' => 'project', 'const' => 'PROJECT_ADDON_PDF', 'langfile' => 'projects', 'label' => 'Projects'),
-		'ModelePDFTask' => array('dir' => 'project/task', 'type' => 'project_task', 'const' => 'PROJECT_TASK_ADDON_PDF', 'langfile' => 'projects', 'label' => 'Tasks'),
-		'ModelePDFStock' => array('dir' => 'stock', 'type' => 'stock', 'const' => 'STOCK_ADDON_PDF', 'langfile' => 'stocks', 'label' => 'Stock'),
-		'ModelePDFMo' => array('dir' => 'mrp', 'type' => 'mrp', 'const' => 'MRP_MO_ADDON_PDF', 'langfile' => 'mrp', 'label' => 'Mos'),
-		'ModelePDFBom' => array('dir' => 'bom', 'type' => 'bom', 'const' => 'BOM_ADDON_PDF', 'langfile' => 'mrp', 'label' => 'BOMs'),
-		'ModelePDFTicket' => array('dir' => 'ticket', 'type' => 'ticket', 'const' => 'TICKET_ADDON_PDF', 'langfile' => 'ticket', 'label' => 'Tickets'),
+		'ModelePDFCommandes' => array('dir' => 'commande', 'table' => 'commande', 'type' => 'order', 'const' => 'COMMANDE_ADDON_PDF', 'langfile' => 'orders', 'label' => 'CustomersOrders'),
+		'ModelePDFFactures' => array('dir' => 'facture', 'table' => 'facture', 'type' => 'invoice', 'const' => 'FACTURE_ADDON_PDF', 'langfile' => 'bills', 'label' => 'BillsCustomers'),
+		'ModelePDFPropales' => array('dir' => 'propale', 'table' => 'propal', 'type' => 'propal', 'const' => 'PROPALE_ADDON_PDF', 'langfile' => 'propal', 'label' => 'Proposals'),
+		'ModelePdfExpedition' => array('dir' => 'expedition', 'table' => 'expedition', 'type' => 'shipping', 'const' => 'EXPEDITION_ADDON_PDF', 'langfile' => 'sendings', 'label' => 'Shipments'),
+		'ModelePDFDeliveryOrder' => array('dir' => 'delivery', 'table' => 'delivery', 'type' => 'delivery', 'const' => 'DELIVERY_ADDON_PDF', 'langfile' => 'deliveries', 'label' => 'Deliveries'),
+		'ModelePDFSuppliersOrders' => array('dir' => 'supplier_order', 'table' => 'commande_fournisseur', 'type' => 'order_supplier', 'const' => 'COMMANDE_SUPPLIER_ADDON_PDF', 'langfile' => 'orders', 'label' => 'SuppliersOrders'),
+		'ModelePDFSuppliersInvoices' => array('dir' => 'supplier_invoice', 'table' => 'facture_fourn', 'type' => 'invoice_supplier', 'const' => 'INVOICE_SUPPLIER_ADDON_PDF', 'langfile' => 'bills', 'label' => 'BillsSuppliers'),
+		'ModelePDFContract' => array('dir' => 'contract', 'table' => 'contrat', 'type' => 'contract', 'const' => 'CONTRACT_ADDON_PDF', 'langfile' => 'contracts', 'label' => 'Contracts'),
+		'ModelePDFFicheinter' => array('dir' => 'fichinter', 'table' => 'fichinter', 'type' => 'ficheinter', 'const' => 'FICHEINTER_ADDON_PDF', 'langfile' => 'interventions', 'label' => 'Interventions'),
+		'ModelePDFProjects' => array('dir' => 'project', 'table' => 'projet', 'type' => 'project', 'const' => 'PROJECT_ADDON_PDF', 'langfile' => 'projects', 'label' => 'Projects'),
+		'ModelePDFTask' => array('dir' => 'project/task', 'table' => 'projet_task', 'type' => 'project_task', 'const' => 'PROJECT_TASK_ADDON_PDF', 'langfile' => 'projects', 'label' => 'Tasks'),
+		'ModelePDFStock' => array('dir' => 'stock', 'table' => 'entrepot', 'type' => 'stock', 'const' => 'STOCK_ADDON_PDF', 'langfile' => 'stocks', 'label' => 'Stock'),
+		'ModelePDFMo' => array('dir' => 'mrp', 'table' => 'mrp_mo', 'type' => 'mrp', 'const' => 'MRP_MO_ADDON_PDF', 'langfile' => 'mrp', 'label' => 'Mos'),
+		'ModelePDFBom' => array('dir' => 'bom', 'table' => 'bom_bom', 'type' => 'bom', 'const' => 'BOM_ADDON_PDF', 'langfile' => 'mrp', 'label' => 'BOMs'),
+		'ModelePDFTicket' => array('dir' => 'ticket', 'table' => 'ticket', 'type' => 'ticket', 'const' => 'TICKET_ADDON_PDF', 'langfile' => 'ticket', 'label' => 'Tickets'),
 	);
 }
 
@@ -281,7 +282,7 @@ function emp_deploy_all(&$errors = array())
  *
  * @param DoliDB $db   Database handler
  * @param Conf   $conf Dolibarr conf
- * @return array<string,array<int,array{file:string,name:string,storedfile:string,deployed:bool,enabled:bool,isdefault:bool}>>
+ * @return array<string,array<int,array{file:string,name:string,storedfile:string,deployed:bool,enabled:bool,isdefault:bool,inuse:int}>>
  */
 function emp_list_models($db, $conf)
 {
@@ -312,6 +313,12 @@ function emp_list_models($db, $conf)
 		foreach ($files as $storedfile) {
 			$file = basename($storedfile);
 			$name = substr($file, 4, -12); // strip "pdf_" and ".modules.php"
+			// Objects (all entities) still referencing this model: guard shown before deletion
+			$inuse = 0;
+			$resql = $db->query("SELECT COUNT(*) as nb FROM ".MAIN_DB_PREFIX.$info['table']." WHERE model_pdf = '".$db->escape($name)."'");
+			if ($resql && ($obj = $db->fetch_object($resql))) {
+				$inuse = (int) $obj->nb;
+			}
 			$out[$parent][] = array(
 				'file' => $file,
 				'name' => $name,
@@ -319,6 +326,7 @@ function emp_list_models($db, $conf)
 				'deployed' => file_exists(emp_deploy_dir($info['dir']).'/'.$file),
 				'enabled' => in_array($name, $enabled),
 				'isdefault' => (getDolGlobalString($info['const']) == $name),
+				'inuse' => $inuse,
 			);
 		}
 	}

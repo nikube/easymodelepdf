@@ -297,7 +297,15 @@ if (empty($models)) {
 			print '<td class="center nowraponall">';
 			print '<a href="'.$urlbase.'&action=download">'.img_picto($langs->trans("Download"), 'download').'</a>';
 			print ' &nbsp; ';
-			print '<a href="'.$urlbase.'&action=deletefile" onclick="return confirm(\''.dol_escape_js($langs->transnoentities("EmpConfirmDelete", $m['file'])).'\');">'.img_picto($langs->trans("Delete"), 'delete').'</a>';
+			// Guard: the confirmation lists what still depends on this model
+			$confirm = $langs->transnoentities("EmpConfirmDelete", $m['file']);
+			if ($m['inuse']) {
+				$confirm .= "\n\n".$langs->transnoentities("EmpConfirmInUse", $m['inuse'], $langs->transnoentities($info['label']));
+			}
+			if ($m['isdefault']) {
+				$confirm .= "\n\n".$langs->transnoentities("EmpConfirmIsDefault", $langs->transnoentities($info['label']));
+			}
+			print '<a href="'.$urlbase.'&action=deletefile" onclick="return confirm(\''.dol_escape_js($confirm).'\');">'.img_picto($langs->trans("Delete"), 'delete').'</a>';
 			print '</td>';
 
 			print '</tr>';
