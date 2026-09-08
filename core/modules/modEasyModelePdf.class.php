@@ -47,7 +47,7 @@ class modEasyModelePdf extends DolibarrModules
 		$this->descriptionlong = "Carry your hand-written PDF document models (pdf_*.modules.php) without building a module for each customer: drop the file on the setup page, EasyModelePdf detects the target object (order, invoice, proposal, shipment...), checks the class/file name rule, stores the file safely and deploys it so it shows up in the native document model lists.";
 		$this->editor_name = 'Anatole Conseil';
 		$this->editor_url = '';
-		$this->version = '0.1.0';
+		$this->version = '0.1.1';
 		$this->const_name = 'MAIN_MODULE_'.strtoupper($this->name);
 		$this->picto = 'fa-file-pdf';
 

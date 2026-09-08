@@ -18,6 +18,7 @@ EmpConfirmDelete=Permanently delete model %s (stored file + deployed file)?
 EmpErrBadFileName=%s: file name must look like pdf_name.modules.php
 EmpErrCannotRead=%s: unreadable file
 EmpErrNoClass=%s: no PHP class found in file
+EmpErrSyntax=%s: PHP syntax error, file rejected: %s
 EmpErrClassMismatch=%s: the class must be named "%s" (Dolibarr rule: class = file name). Found class(es): %s
 EmpErrUnsupportedParent=%s: unsupported parent class "%s". Supported parent classes: %s
 EmpErrUpload=%s: error while uploading file

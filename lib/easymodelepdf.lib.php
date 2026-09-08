@@ -56,7 +56,7 @@ function emp_supported_types()
 		'ModelePDFCommandes' => array('dir' => 'commande', 'type' => 'order', 'const' => 'COMMANDE_ADDON_PDF', 'langfile' => 'orders', 'label' => 'CustomersOrders'),
 		'ModelePDFFactures' => array('dir' => 'facture', 'type' => 'invoice', 'const' => 'FACTURE_ADDON_PDF', 'langfile' => 'bills', 'label' => 'BillsCustomers'),
 		'ModelePDFPropales' => array('dir' => 'propale', 'type' => 'propal', 'const' => 'PROPALE_ADDON_PDF', 'langfile' => 'propal', 'label' => 'Proposals'),
-		'ModelePDFExpedition' => array('dir' => 'expedition', 'type' => 'shipping', 'const' => 'EXPEDITION_ADDON_PDF', 'langfile' => 'sendings', 'label' => 'Shipments'),
+		'ModelePdfExpedition' => array('dir' => 'expedition', 'type' => 'shipping', 'const' => 'EXPEDITION_ADDON_PDF', 'langfile' => 'sendings', 'label' => 'Shipments'),
 		'ModelePDFDeliveryOrder' => array('dir' => 'delivery', 'type' => 'delivery', 'const' => 'DELIVERY_ADDON_PDF', 'langfile' => 'deliveries', 'label' => 'Deliveries'),
 		'ModelePDFSuppliersOrders' => array('dir' => 'supplier_order', 'type' => 'order_supplier', 'const' => 'COMMANDE_SUPPLIER_ADDON_PDF', 'langfile' => 'orders', 'label' => 'SuppliersOrders'),
 		'ModelePDFSuppliersInvoices' => array('dir' => 'supplier_invoice', 'type' => 'invoice_supplier', 'const' => 'INVOICE_SUPPLIER_ADDON_PDF', 'langfile' => 'bills', 'label' => 'BillsSuppliers'),
@@ -137,7 +137,12 @@ function emp_analyze_model_file($filepath, $filename, &$error)
 	$expectedclass = substr($filename, 0, -12);
 
 	// Tokenize and collect "class X extends Y" declarations (robust to comments/strings)
-	$tokens = @token_get_all($content);
+	try {
+		$tokens = token_get_all($content, TOKEN_PARSE); // TOKEN_PARSE: throws ParseError on syntax errors
+	} catch (Throwable $e) {
+		$error = $langs->trans("EmpErrSyntax", $filename, $e->getMessage().' (line '.$e->getLine().')');
+		return false;
+	}
 	$classes = array(); // classname => parent (or '')
 	$n = is_array($tokens) ? count($tokens) : 0;
 	for ($i = 0; $i < $n; $i++) {
@@ -193,6 +198,13 @@ function emp_analyze_model_file($filepath, $filename, &$error)
 
 	$parent = $classes[$expectedclass];
 	$map = emp_supported_types();
+	// PHP class names are case-insensitive (core: ModelePdfExpedition vs ModelePDFCommandes)
+	foreach (array_keys($map) as $key) {
+		if (strcasecmp($key, $parent) === 0) {
+			$parent = $key;
+			break;
+		}
+	}
 	if (empty($parent) || !array_key_exists($parent, $map)) {
 		$error = $langs->trans("EmpErrUnsupportedParent", $filename, ($parent ? $parent : '?'), implode(', ', array_keys($map)));
 		return false;

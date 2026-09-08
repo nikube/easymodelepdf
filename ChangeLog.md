@@ -1,5 +1,12 @@
 # ChangeLog
 
+## 0.1.1
+
+- Fix: shipment models were always rejected (core parent class is `ModelePdfExpedition`,
+  lookup is now case-insensitive like PHP class names).
+- Fix: files with a PHP syntax error were accepted and deployed (breaking the core
+  document model admin pages); they are now rejected at upload.
+
 ## 0.1.0
 
 - Initial version: drag & drop upload of pdf_*.modules.php files, auto-detection of

@@ -18,6 +18,7 @@ EmpConfirmDelete=Supprimer définitivement le modèle %s (fichier stocké + fich
 EmpErrBadFileName=%s : le nom de fichier doit être de la forme pdf_nom.modules.php
 EmpErrCannotRead=%s : fichier illisible
 EmpErrNoClass=%s : aucune classe PHP trouvée dans le fichier
+EmpErrSyntax=%s : erreur de syntaxe PHP, fichier refusé : %s
 EmpErrClassMismatch=%s : la classe doit s'appeler "%s" (règle Dolibarr : classe = nom de fichier). Classe(s) trouvée(s) : %s
 EmpErrUnsupportedParent=%s : classe parente "%s" non gérée. Classes parentes supportées : %s
 EmpErrUpload=%s : erreur pendant l'envoi du fichier
