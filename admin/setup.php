@@ -161,13 +161,18 @@ if ($action == 'upload' && !empty($_FILES['modelfiles'])) {
 	$filename = 'pdf_'.dol_sanitizeFileName($value).'.modules.php';
 	$storedfile = emp_data_dir().'/'.$typeinfo['dir'].'/'.$filename;
 	if (file_exists($storedfile)) {
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="'.$filename.'"');
-		header('Content-Length: '.filesize($storedfile));
-		readfile($storedfile);
-		exit;
+		emp_send_file($storedfile, $filename);
 	}
 	setEventMessages($langs->trans("EmpErrCannotRead", $filename), null, 'errors');
+} elseif ($action == 'downloadavail' && $typeinfo) {
+	// Download a core/other module model (whitelist: only files found by the scan)
+	$avail = emp_list_available_models($conf);
+	foreach ((isset($avail[$parentkey]) ? $avail[$parentkey] : array()) as $a) {
+		if ($a['file'] === $value) {
+			emp_send_file($a['path'], $a['file']);
+		}
+	}
+	setEventMessages($langs->trans("EmpErrCannotRead", $value), null, 'errors');
 } elseif ($action == 'redeploy') {
 	$errors = array();
 	$count = emp_deploy_all($errors);
@@ -304,6 +309,38 @@ if (empty($models)) {
 	print '<div class="center">';
 	print '<a class="button reposition" href="'.$_SERVER["PHP_SELF"].'?action=redeploy&token='.newToken().'">'.$langs->trans("EmpRedeploy").'</a>';
 	print '</div>';
+}
+
+// ---- Available models (core + other modules), downloadable as starting points ----
+$avail = emp_list_available_models($conf);
+$nbavail = 0;
+foreach ($avail as $list) {
+	$nbavail += count($list);
+}
+if ($nbavail) {
+	print '<br><details><summary class="cursorpointer"><strong>'.$langs->trans("EmpAvailableModels", $nbavail).'</strong></summary>';
+	print '<span class="opacitymedium">'.$langs->trans("EmpAvailableIntro").'</span><br><br>';
+	print '<div class="div-table-responsive-no-min">';
+	print '<table class="noborder centpercent">';
+	print '<tr class="liste_titre">';
+	print '<td>'.$langs->trans("Type").'</td>';
+	print '<td>'.$langs->trans("File").'</td>';
+	print '<td>'.$langs->trans("EmpOrigin").'</td>';
+	print '<td class="center" width="100">'.$langs->trans("Action").'</td>';
+	print '</tr>';
+	foreach ($avail as $parent => $list) {
+		foreach ($list as $a) {
+			$url = $_SERVER["PHP_SELF"].'?token='.newToken().'&parentkey='.urlencode($parent).'&value='.urlencode($a['file']).'&action=downloadavail';
+			print '<tr class="oddeven">';
+			print '<td>'.$langs->trans($map[$parent]['label']).'</td>';
+			print '<td>'.dol_escape_htmltag($a['file']).'</td>';
+			print '<td>'.dol_escape_htmltag($a['origin']).'</td>';
+			print '<td class="center"><a href="'.$url.'">'.img_picto($langs->trans("Download"), 'download').'</a></td>';
+			print '</tr>';
+		}
+	}
+	print '</table>';
+	print '</div></details>';
 }
 
 print dol_get_fiche_end();

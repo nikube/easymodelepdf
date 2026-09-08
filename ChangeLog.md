@@ -2,6 +2,8 @@
 
 ## 0.1.1
 
+- New: collapsible list of the PDF models available in Dolibarr core and other enabled
+  modules, downloadable as starting points for a custom model.
 - Fix: shipment models were always rejected (core parent class is `ModelePdfExpedition`,
   lookup is now case-insensitive like PHP class names).
 - Fix: files with a PHP syntax error were accepted and deployed (breaking the core

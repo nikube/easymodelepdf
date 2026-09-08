@@ -28,3 +28,6 @@ EmpErrCopy=Cannot write file %s
 EmpErrDelete=Cannot delete %s
 EmpWarnNotWritable=The module directory (%s) is not writable by the web server: models cannot be deployed. Fix permissions.
 EmpCarriedModels=Installed models
+EmpAvailableModels=Available models to download (%s)
+EmpAvailableIntro=PDF models shipped by Dolibarr and the other enabled modules. Download one as a starting point, rename the file AND the class (pdf_mymodel), customize it, then drop it above.
+EmpOrigin=Origin

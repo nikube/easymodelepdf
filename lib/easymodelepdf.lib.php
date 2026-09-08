@@ -324,3 +324,58 @@ function emp_list_models($db, $conf)
 	}
 	return $out;
 }
+
+/**
+ * List PDF models available in Dolibarr core and other modules (starting points to customize).
+ * Scans the same directories as the core admin pages ('' and '/doc' suffix, every models root),
+ * excluding this module's own tree (carried models are already listed by emp_list_models()).
+ *
+ * @param Conf $conf Dolibarr conf
+ * @return array<string,array<int,array{file:string,path:string,origin:string}>> Keyed by parent class
+ */
+function emp_list_available_models($conf)
+{
+	$out = array();
+	$dirmodels = array('/');
+	if (!empty($conf->modules_parts['models']) && is_array($conf->modules_parts['models'])) {
+		$dirmodels = array_merge($dirmodels, $conf->modules_parts['models']);
+	}
+	foreach (emp_supported_types() as $parent => $info) {
+		foreach ($dirmodels as $reldir) {
+			if (trim($reldir, '/') == 'easymodelepdf') {
+				continue;
+			}
+			foreach (array('', '/doc') as $suffix) {
+				$dir = dol_buildpath($reldir.'core/modules/'.$info['dir'].$suffix, 0);
+				$files = glob($dir.'/pdf_*.modules.php');
+				if (empty($files)) {
+					continue;
+				}
+				foreach ($files as $path) {
+					$out[$parent][] = array(
+						'file' => basename($path),
+						'path' => $path,
+						'origin' => (trim($reldir, '/') ? trim($reldir, '/') : 'core'),
+					);
+				}
+			}
+		}
+	}
+	return $out;
+}
+
+/**
+ * Send a model file to the browser as an attachment and exit.
+ *
+ * @param string $path     Absolute path of the file
+ * @param string $filename File name presented to the browser
+ * @return void
+ */
+function emp_send_file($path, $filename)
+{
+	header('Content-Type: application/octet-stream');
+	header('Content-Disposition: attachment; filename="'.$filename.'"');
+	header('Content-Length: '.filesize($path));
+	readfile($path);
+	exit;
+}

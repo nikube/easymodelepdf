@@ -28,3 +28,6 @@ EmpErrCopy=Impossible d'écrire le fichier %s
 EmpErrDelete=Impossible de supprimer %s
 EmpWarnNotWritable=Le répertoire du module (%s) n'est pas accessible en écriture par le serveur web : les modèles ne pourront pas être déployés. Ajustez les permissions.
 EmpCarriedModels=Modèles installés
+EmpAvailableModels=Modèles disponibles à télécharger (%s)
+EmpAvailableIntro=Modèles PDF fournis par Dolibarr et les autres modules actifs. Téléchargez-en un comme point de départ, renommez le fichier ET la classe (pdf_monmodele), adaptez-le, puis déposez-le ci-dessus.
+EmpOrigin=Origine
