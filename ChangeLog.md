@@ -1,5 +1,13 @@
 # ChangeLog
 
+## 0.1.2
+
+- New: expense report models (`ModeleExpenseReport`) are supported.
+- New: a model may extend a core model (e.g. `pdf_standard_expensereport`); the parent
+  chain is followed to find the supported `ModelePDF*` class.
+- New: example model `examples/pdf_kmtotal_expensereport.modules.php` (standard expense
+  report + total km row).
+
 ## 0.1.1
 
 - New: the delete confirmation warns when objects still use the model and when it is the

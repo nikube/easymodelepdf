@@ -15,8 +15,10 @@ name or the model silently never shows up.
 Activate EasyModelePdf, open its setup page, and drop your `pdf_*.modules.php` files:
 
 - **Auto-detection** — the target object (order, invoice, proposal, shipment, contract,
-  intervention, project, task, stock, MO, BOM, ticket, supplier order/invoice, delivery)
-  is detected from the `ModelePDF*` parent class the model extends.
+  intervention, project, task, stock, MO, BOM, ticket, supplier order/invoice, delivery,
+  expense report) is detected from the `ModelePDF*` parent class the model extends.
+  A model may also extend a core model (e.g. `pdf_standard_expensereport`): the chain
+  is followed up to the supported parent.
 - **Validation** — file name pattern, PHP class found, and the *class = file name* rule
   enforced with a clear error message instead of a silent failure.
 - **Safe storage** — the uploaded file is stored under `DOL_DATA_ROOT/easymodelepdf/models/`
@@ -28,6 +30,12 @@ Activate EasyModelePdf, open its setup page, and drop your `pdf_*.modules.php` f
 
 The installed models also show up in the native document model lists
 (Setup → Modules → Orders/Invoices/... ) like any core model.
+
+## Example model
+
+`examples/pdf_kmtotal_expensereport.modules.php`: the standard expense report PDF
+with a **Total km** row (sum of mileage lines, with their amount) under the totals box.
+Drop it on the setup page as is.
 
 ## Requirements
 

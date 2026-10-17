@@ -69,6 +69,7 @@ function emp_supported_types()
 		'ModelePDFMo' => array('dir' => 'mrp', 'table' => 'mrp_mo', 'type' => 'mrp', 'const' => 'MRP_MO_ADDON_PDF', 'langfile' => 'mrp', 'label' => 'Mos'),
 		'ModelePDFBom' => array('dir' => 'bom', 'table' => 'bom_bom', 'type' => 'bom', 'const' => 'BOM_ADDON_PDF', 'langfile' => 'mrp', 'label' => 'BOMs'),
 		'ModelePDFTicket' => array('dir' => 'ticket', 'table' => 'ticket', 'type' => 'ticket', 'const' => 'TICKET_ADDON_PDF', 'langfile' => 'ticket', 'label' => 'Tickets'),
+		'ModeleExpenseReport' => array('dir' => 'expensereport', 'table' => 'expensereport', 'type' => 'expensereport', 'const' => 'EXPENSEREPORT_ADDON_PDF', 'langfile' => 'trips', 'label' => 'ExpenseReports'),
 	);
 }
 
@@ -106,6 +107,54 @@ function emp_module_root()
 function emp_deploy_dir($dirkey)
 {
 	return emp_module_root().'/core/modules/'.$dirkey.'/doc';
+}
+
+/**
+ * Map a declared parent class to a key of emp_supported_types().
+ * Direct match is case-insensitive (core: ModelePdfExpedition vs ModelePDFCommandes).
+ * A model may also extend a core model (e.g. pdf_standard_expensereport): the core
+ * file is loaded and its ancestors are walked until a supported ModelePDF* is found.
+ *
+ * @param string               $parent Parent class name as declared in the uploaded file
+ * @param array<string,array>  $map    emp_supported_types()
+ * @return string Matching map key, or $parent unchanged when nothing matches
+ */
+function emp_resolve_parent($parent, $map)
+{
+	if ($parent === '') {
+		return $parent;
+	}
+	foreach (array_keys($map) as $key) {
+		if (strcasecmp($key, $parent) === 0) {
+			return $key;
+		}
+	}
+	if (!preg_match('/^pdf_[A-Za-z0-9_]+$/', $parent)) {
+		return $parent;
+	}
+	// ponytail: only core models are followed; a model extending another carried model is not resolved
+	if (!class_exists($parent, false)) {
+		foreach ($map as $info) {
+			foreach (array('/doc/', '/') as $sub) {
+				$f = DOL_DOCUMENT_ROOT.'/core/modules/'.$info['dir'].$sub.$parent.'.modules.php';
+				if (is_file($f)) {
+					require_once $f;
+					break 2;
+				}
+			}
+		}
+	}
+	if (!class_exists($parent, false)) {
+		return $parent;
+	}
+	foreach (class_parents($parent) as $ancestor) {
+		foreach (array_keys($map) as $key) {
+			if (strcasecmp($key, $ancestor) === 0) {
+				return $key;
+			}
+		}
+	}
+	return $parent;
 }
 
 /**
@@ -199,13 +248,7 @@ function emp_analyze_model_file($filepath, $filename, &$error)
 
 	$parent = $classes[$expectedclass];
 	$map = emp_supported_types();
-	// PHP class names are case-insensitive (core: ModelePdfExpedition vs ModelePDFCommandes)
-	foreach (array_keys($map) as $key) {
-		if (strcasecmp($key, $parent) === 0) {
-			$parent = $key;
-			break;
-		}
-	}
+	$parent = emp_resolve_parent($parent, $map);
 	if (empty($parent) || !array_key_exists($parent, $map)) {
 		$error = $langs->trans("EmpErrUnsupportedParent", $filename, ($parent ? $parent : '?'), implode(', ', array_keys($map)));
 		return false;
